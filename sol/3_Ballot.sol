@@ -1,4 +1,4 @@
-
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
 //////////////////////////////
@@ -20,7 +20,7 @@ contract Ballot{
 		// true:已投票
 		bool voted; 
 		// 被委托人
-		address delegata;
+		address delegate;
 		// 投票提案的索引
 		uint vote;
 	}
@@ -43,14 +43,14 @@ contract Ballot{
 	Proposal[] public proposals;
 
 	// 构造方法  
-	constructor(byte32[] memory porpssalNames){
+	constructor(bytes32[] memory porposalNames){
 		chairPerson = msg.sender;
 		voters[chairPerson].weight = 1;
-		for (uint i = 0; i < porpssalNames.length; i++) {
+		for (uint i = 0; i < porposalNames.length; i++) {
 			// `Proposal({...})` 创建一个临时 Proposal 对象，
             // `proposals.push(...)` 将其添加到 `proposals` 的末尾
-            Proposal.push(Proposal({
-            	name: porpssalNames[i],
+            proposals.push(Proposal({
+            	name: porposalNames[i],
             	voteCount:0
         	}));
 		}
@@ -91,9 +91,9 @@ contract Ballot{
 	function delegate(address to)public{
 		// 引用
 		Voter storage sender = voters[msg.sender];
-		require(!sender.voted,"you already voted.")
+		require(!sender.voted,"you already voted.");
 
-		require(to != msg.sender,"Self-delegation is disallowed.")
+		require(to != msg.sender,"Self-delegation is disallowed.");
 
        // 委托是可以传递的，只要被委托者 `to` 也设置了委托。
         // 一般来说，这种循环委托是危险的。因为，如果传递的链条太长，
@@ -102,8 +102,8 @@ contract Ballot{
         // 而在另一些情况下，如果形成闭环，则会让合约完全卡住。
 
         // address(0)空地址 类似于 null 、nil 之类的
-		while(voters[to].delegation != address(0)){
-			to = voters[to].delegationl;
+		while(voters[to].delegate != address(0)){
+			to = voters[to].delegate;
             // 不允许闭环委托
 			require(to != msg.sender,"Found loop in delegation.");
 		}
@@ -138,9 +138,9 @@ contract Ballot{
 	// 统计获得最多投票的提案
 	function winningProposal()public view returns(uint winnningProposal_){
 			uint winnningProposalCount = 0;
-			for(uint i = 0; i< proposal.length; i++){
-				if(proposal[i].voteCount > winnningProposalCount){
-					winnningProposalCount = proposal[i].voteCount;
+			for(uint i = 0; i< proposals.length; i++){
+				if(proposals[i].voteCount > winnningProposalCount){
+					winnningProposalCount = proposals[i].voteCount;
 					winnningProposal_ = i;
 				}
 			}
@@ -152,12 +152,3 @@ contract Ballot{
     }
 
 }
-
-
-
-
-
-
-
-
-

@@ -9,7 +9,7 @@ contract Coin {
     address public minter;
 
     //@deprecated:该映射类型映射地址无符号整数
-    mapping (address => unit) public balances;
+    mapping (address => uint) public balances;
 
     //客户端可以通过事件针对变化作出高效的反应
     //@deprecated:该事件在函数的最后一行中发出 。以太坊客户端（例如 Web 应用程序）可以侦听区块链上发出的这些事件，而无需花费太多成本。
