@@ -62,7 +62,7 @@ contract Coin {
         }
         balances[msg.sender] -= amount;
         balances[receiver] += amount;
-        emit Sent(msg.sender,address receiver, uint amount);
+        emit Sent(msg.sender,receiver,amount);
     }
 
     // @note: 如果您使用此合约将硬币发送到某个地址，则在区块链浏览器上查看该地址时将看不到任何内容，因为您发送硬币的记录和更改的余额仅存储在该特定硬币的数据存储中合同。
