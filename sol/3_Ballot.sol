@@ -43,6 +43,7 @@ contract Ballot{
 	Proposal[] public proposals;
 
 	// 构造方法  
+	//@deprecated: 初始化函数需要提案集合并初始化票数为0；
 	constructor(bytes32[] memory porposalNames){
 		chairPerson = msg.sender;
 		voters[chairPerson].weight = 1;
@@ -58,6 +59,7 @@ contract Ballot{
 
 	// 授权 `voter` 对这个（投票）表决进行投票
     // 只有 `chairperson` 可以调用该函数。
+    // @deprecated: 调用者（参与投票的人）初始化（第二个require做了判断）
 	function giveRightToVote(address voter) public{
         // 若 `require` 的第一个参数的计算结果为 `false`，
         // 则终止执行，撤销所有对状态和以太币余额的改动。
@@ -89,7 +91,7 @@ contract Ballot{
 	// require(msg.sender == owner);
 	///////////////////////////////////////////////////////////
 	function delegate(address to)public{
-		// 引用
+		// 引用（调用者本身）
 		Voter storage sender = voters[msg.sender];
 		require(!sender.voted,"you already voted.");
 
@@ -125,6 +127,7 @@ contract Ballot{
 
     /// 把你的票(包括委托给你的票)，
     /// 投给提案 `proposals[proposal].name`.
+    // @deprecated: proposal 索引
 	function vote(uint proposal) public{
 		Voter storage sender = voters[msg.sender];
         require(!sender.voted, "Already voted.");
