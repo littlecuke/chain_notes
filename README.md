@@ -20,6 +20,8 @@ solidity or golang contracts
 
  [速查表](https://learnblockchain.cn/docs/solidity/cheatsheet.html#)
  
+ [安全检查](https://learnblockchain.cn/docs/solidity/security-considerations.html)
+ 
 
 ### evm
 
