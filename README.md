@@ -17,6 +17,8 @@ solidity or golang contracts
  [solidity 0.8.0 中文版](https://learnblockchain.cn/docs/solidity/index.html)
 
  [solidity by example -version 0.7.6](https://solidity-by-example.org/)
+
+ [速查表](https://learnblockchain.cn/docs/solidity/cheatsheet.html#)
  
 
 ### evm
